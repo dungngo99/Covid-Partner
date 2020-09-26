@@ -13,6 +13,9 @@ const index = () => {
           <Link to={`${routes.ACCOUNT}`}>Account</Link>
         </li>
         <li>
+          <Link to={`${routes.ACCOUNT}`}>Discussion</Link>
+        </li>
+        <li>
           <Link to={`${routes.SIGN_IN}`}>Login</Link>
         </li>
         <li>
