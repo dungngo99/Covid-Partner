@@ -2,4 +2,5 @@ export const SIGN_UP = '/register';
 export const SIGN_IN = '/login';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
-export const PAGE_NOT_FOUND = '*'; 
+export const DISCUSSION = '/discussion';
+export const PAGE_NOT_FOUND = '*';
