@@ -3,18 +3,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import { Container, Form, Button } from "react-bootstrap";
 import { authActions } from "../../redux/actions/auth.action"
+import * as types from '../constants'
 
 const SignIn = () => {
   const dispatch = useDispatch();
-  const errors = useSelector(state => state.auth.errors)
+
   const loading = useSelector(state => state.auth.loading)
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
 
-  const [error, setError] = useState({
+  const [errors, setError] = useState({
     email: '',
     password: '',
   });
@@ -25,12 +27,12 @@ const SignIn = () => {
     const { email, password } = formData
 
     if (!email) {
-      setError({ ...error, email: "Please fill out your email" })
+      setError({ ...errors, email: "Please fill out your email" })
       return;
     }
 
     if (!password) {
-      setError({ ...error, password: "Please fill out your password" })
+      setError({ ...errors, password: "Please fill out your password" })
       return;
     }
 
@@ -39,14 +41,16 @@ const SignIn = () => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
-    setError({ ...error, [event.target.name]: '' })
+    setError({ ...errors, [event.target.name]: '' })
   }
+
+  if (isAuthenticated) return <Redirect to={`${types.ACCOUNT}`}></Redirect>
 
   return (
     <Container className="bg-login">
       <div className="col-login">
         <div className="style-row-quote">
-          <h1 className="style-quote">This is login page</h1>
+          <h1 className="style-quote">Welcome to our app</h1>
         </div>
         <div className="style-form-login">
           <Form onSubmit={handleSubmit} className="form-login">
