@@ -7,6 +7,7 @@ import SignUp from './SignUp/index'
 import AccountPage from './Account/index'
 import PageNotFound from './PageNotFound/index'
 import Discussion from './Discussion/index'
+import Dashboard from './Dashboard'
 
 import ProtectedRoute from './protectedRoute'
 import * as route from './constants'
@@ -17,7 +18,10 @@ const Routes = (props) => {
       <Route component={HomePage} path={`${route.HOME}`}/>
       <Route component={SignUp} path={`${route.SIGN_UP}`}/>
       <Route component={SignIn} path={`${route.SIGN_IN}`}/>
-      <ProtectedRoute component={Discussion} path={`${route.DISCUSSION}`}/>
+      <Route component={Dashboard} path={route.DASHBOARD}/>
+      <Route component={Discussion} path={`${route.DISCUSSION}`}/>
+      <Route path={route.DONATION}/>
+      <Route path={route.TIPS}/>
       <ProtectedRoute component={AccountPage} path={`${route.ACCOUNT}`}/>
       <Route component={PageNotFound} path={`${route.PAGE_NOT_FOUND}`} />
     </Switch>
