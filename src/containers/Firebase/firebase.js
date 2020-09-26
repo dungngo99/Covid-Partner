@@ -18,12 +18,28 @@ class Firebase{
     this.auth = app.auth()
   }
 
-  doCreateUserWithEmailAndPassword = (email, password) => {
-    return this.auth.createUserWithEmailAndPassword(email, password)
+  doCreateUserWithEmailAndPassword = (location, name, email, password) => {
+    return this.auth.createUserWithEmailAndPassword(email, password).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/weak-password') {
+        alert('The password is too weak.');
+      } else {
+        alert(errorMessage);
+      }
+    });
   }
 
   doSignInWithEmailAndPassword = (email, password) => {
-    return this.auth.signInWithEmailAndPassword(email, password)
+    return this.auth.signInWithEmailAndPassword(email, password).catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+    });
   }
 
   doSignOut = () => this.auth.signOut()
@@ -33,4 +49,6 @@ class Firebase{
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 }
 
-export default Firebase;
+const firebase = new Firebase();
+
+export default firebase;

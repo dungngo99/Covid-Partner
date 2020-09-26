@@ -1,10 +1,12 @@
 import React from 'react'
 // import {useSelector} from 'react-redux'
 import {Route, Redirect} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 import * as routes from './constants'
 
 const ProtectedRoute = ({path, component}) => {
-  const isAuthenticated = false
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+  
   if (isAuthenticated) return <Route path={path} component={component}></Route>
 
   return (
