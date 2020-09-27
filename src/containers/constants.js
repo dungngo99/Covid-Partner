@@ -3,4 +3,5 @@ export const SIGN_IN = '/login';
 export const HOME = '/home';
 export const ACCOUNT = '/account';
 export const DISCUSSION = '/discussion';
+export const LOGOUT = '/login'
 export const PAGE_NOT_FOUND = '*';

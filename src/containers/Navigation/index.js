@@ -23,7 +23,7 @@ const Navigation = () => {
       <Nav.Link as={Link} to={`${routes.ACCOUNT}`}>
         <i className="fas fa-sign-out-alt" /> Account
       </Nav.Link>
-      <Nav.Link as={Link} to='/' onClick={(event) => handleLogout(event)}>
+      <Nav.Link as={Link} to={`${routes.LOGOUT}`} onClick={(event) => handleLogout(event)}>
         <i className="fas fa-sign-out-alt" /> Logout
       </Nav.Link>
     </Nav>
