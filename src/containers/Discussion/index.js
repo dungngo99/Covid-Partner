@@ -1,10 +1,16 @@
-import React from 'react'
-import styled from 'styled-components';
+import React, { useState } from 'react'
+import styled, { ThemeConsumer } from 'styled-components';
 import * as routes from '../constants';
 import {
   Container,
   FormInput,
-  FormTextarea
+  FormTextarea,
+  Button,
+  Collapse,
+  InputGroup,
+  InputGroupAddon,
+  Row,
+  Col
 } from 'shards-react';
 
 const DiscussionPost = styled.div`
@@ -17,30 +23,253 @@ const DiscussionPost = styled.div`
   }
 `;
 
+const MyPost = () => {
+
+  const [tags, setTags] = useState(['tag', 'tag']);
+
+  return (
+    <DiscussionPost style={{'margin': '40px 0'}}>
+      <FormInput
+        style={{
+          'backgroundColor': 'rgba(255, 255, 255, 0.5)', 
+          'fontSize': '25px'
+        }}
+        placeholder="Post Title"
+      />
+      <FormTextarea
+        style={{
+          'margin': '20px 0',
+          'backgroundColor': 'rgba(255, 255, 255, 0.5)'
+        }}
+        placeholder="Post Content"
+      />
+      <ThemeConsumer>
+        {
+          theme => (
+            <div style={{
+              'display': 'flex',
+              'justifyContent': 'space-between',
+              'width': '100%',
+              'padding': '0'
+            }}>
+              <div>
+                {
+                  tags.map((tag) => (
+                    <span
+                      style={{
+                        'marginRight': '20px',
+                        'color': theme.darkblue,
+                        'fontWeight': 'bold'
+                      }}>
+                        #{tag}
+                      </span>
+                  ))
+                }
+                <Button pill outline>Add Tag</Button>
+              </div>
+              <Button pill>Post</Button>
+            </div>
+          )
+        }
+      </ThemeConsumer>
+      
+    </DiscussionPost>
+  );
+};
+
+const Post = ({post}) => {
+
+  const [show, setShow] = useState(false);
+
+  const Comment = ({comment}) => {
+    return (
+      <ThemeConsumer>
+        {
+          theme => (
+            <div style={{
+              'display': 'flex',
+              'margin': '10px 0'
+            }}>
+              <div style={{
+                'border-radius': '50%',
+                'border': `2px solid ${theme.brick}`,
+                'height': '50px',
+                'width': '50px',
+                'backgroundImage': 'url("https://profplumbinc.com/wp-content/uploads/2018/06/default-profile.png")',
+                'backgroundSize': 'cover',
+                'marginRight': '10px'
+              }}>
+              </div>
+              <div style={{
+                'flex': '1 1',
+                'padding': '10px 30px',
+                'backgroundColor': theme.peach,
+                'border': `2px solid ${theme.brick}`,
+                'borderRadius': '5px'
+              }}>
+                <div style={{
+                  'fontWeight': 'bold'
+                }}>
+                  {comment.author.firstName} {comment.author.lastName} 
+                </div>
+                <div>
+                  {comment.content}
+                </div>
+              </div>
+            </div>
+          )
+        }
+      </ThemeConsumer>
+    );
+  }
+  return (
+    <div style={{
+      'margin': '100px 0',
+      'display': 'flex'
+    }}>
+      <div>
+        <ThemeConsumer>
+          {
+            theme => (
+              <div style={{
+                'border-radius': '50%',
+                'border': `2px solid ${theme.brick}`,
+                'height': '100px',
+                'width': '100px',
+                'backgroundImage': 'url("https://profplumbinc.com/wp-content/uploads/2018/06/default-profile.png")',
+                'backgroundSize': 'cover',
+                'marginRight': '10px'
+              }}>
+              </div>
+            )
+          }
+        </ThemeConsumer>
+        <div style={{
+          'fontSize': '20px',
+          'textAlign': 'center',
+          'marginTop': '10px'
+        }}>
+          {post.author.firstName} {post.author.lastName[0]}.
+        </div>
+      </div>
+      <div style={{'flex': '1 1'}}>
+        <DiscussionPost>
+          <div style={{'fontSize': '30px', 'fontWeight': 'bold'}}>
+            {post.title}
+          </div>
+          <div style={{'fontSize': '20px', 'margin': '20px 0 50px'}}>{post.content}</div>
+          <Button onClick={() => setShow(!show)} size="sm" outline >
+          {show ? 'Hide' : 'Show' } Comments
+          </Button>
+        </DiscussionPost>
+        <Collapse open={show}>
+            {
+              post.comments.map((comment, index) => (
+                <Comment comment={comment} key={index} />
+              ))
+            }
+        </Collapse>
+        <div style={{'margin': '30px 0'}}>
+          <InputGroup>
+            <FormInput placeholder={"Your comment"}/>
+            <InputGroupAddon type="append">
+              <Button>Comment</Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const Discussion = () => {
 
-  const MyPost = () => {
-    return (
-      <DiscussionPost>
-        <FormInput></FormInput>
-        <FormTextarea></FormTextarea>
-      </DiscussionPost>
-    );
-  };
+  const posts = [
+    {
+      title: 'Title',
+      content: 'Content',
+      userID: 394204930,
+      author: {
+        firstName: 'Jill',
+        lastName: 'Richardson'
+      },
+      comments: [
+        {
+          author: {
+            firstName: 'Robin',
+            lastName: 'Hood'
+          },
+          content: 'My message'
+        }, {
+          author: {
+            firstName : 'Barack',
+            lastName: 'Obama'
+          },
+          content: 'My message'
+        }, {
+          author: {
+            firstName: 'Vanessa',
+            lastName: 'Williams'
+          },
+          content: 'My message'
+        }
+      ]
+    },
+    {
+      title: 'Title',
+      content: 'Content',
+      userId: 394204930,
+      author: {
+        firstName: 'Katy',
+        lastName: 'Bowen'
+      },
+      comments: [
+        {
+          author: {
+            firstName: 'James',
+            lastName: 'Ortega'
+          },
+          content: 'My message'
+        },
+        {
+          author: {
+            firstName: 'Penny',
+            lastName: 'Smith'
+          },
+          content: 'My message'
+        }
+      ]
+    }
+  ];
 
-  const Post = ({post}) => {
-    return (
-      <DiscussionPost>
-        
-      </DiscussionPost>
-    )
-  }
+  const [expanded, setExpanded] = useState(false);
+  const [filters, setFilters] = useState([]);
 
   return (
     <Container>
-      <h1>This is our discussion group</h1>
-      <MyPost></MyPost>
-      <Post></Post>
+      <Row>
+        <Col md={expanded ? 4 : 3}>
+          <div style={{'fontSize': '40px'}}>Filters</div>
+          <Button onClick={() => setExpanded(!expanded)}>{expanded ? 'Collapse' : 'Expand'}</Button>
+          {
+            expanded
+            ? 
+              <>
+                <FormInput></FormInput>
+              </>
+            : <div>{filters.length} filters</div>
+          }
+        </Col>
+        <Col md={expanded ? 8 : 9}>
+          <MyPost></MyPost>
+          {
+            posts.map((post, index) => (
+              <Post post={post} key={index} />
+            ))
+          }
+        </Col>
+      </Row>
+      
     </Container>
   )
 }
@@ -48,4 +277,54 @@ const Discussion = () => {
 
 
 
+  // TEMPORARY COMMENT so i can compile
+
+  // var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
+  // starCountRef.on('value', function(snapshot) {
+  //   updateStarCount(postElement, snapshot.val());
+  // });
+
+  // var userId = firebase.auth().currentUser.uid;
+  // return firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
+  //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  // });
+
+  // function writeNewPost(uid, username, picture, title, body)
+  // {
+  //   var postData = {
+  //     author: username,
+  //     uid: uid,
+  //     body: body,
+  //     title: title,
+  //     starCount: 0,
+  //     authorPic: picture
+  //   };
+
+  //   var newPostKey = firebase.database().ref.child('posts').push().key;
+
+  //   var updates = {};
+  //   updates['/posts/' + newPostKey] = postData;
+
+  //   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
+
+  //   return firebase.database().ref().update(updates);
+  // }
+
+
+  // //completion callback
+  // firebase.database().ref('users/' + userId).set({
+  //   username: name,
+  //   email: email,
+  //   profile_picture : imageUrl
+  // }, function (error)
+  //   {
+  //     if (error)
+  //     {
+  //       // Something to write if it failed
+  //     }
+  //     else
+  //     {
+  //       // Saved successfully!
+  //     }
+  //   });
 export default Discussion;

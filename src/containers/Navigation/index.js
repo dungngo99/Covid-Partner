@@ -30,18 +30,18 @@ const Navigation = () => {
   }
 
   const authLinks = (
-    <Navbar sticky expand={true} type="light">
-      <Nav navbar pills>
-        <NavItem><NavLink active={location == routes.DASHBOARD} href={routes.DASHBOARD}>
+    <Navbar sticky={"sticky"} expand={true} type="light">
+      <Nav navbar>
+        <NavItem><NavLink active={location === routes.DASHBOARD} href={routes.DASHBOARD}>
           Home
         </NavLink></NavItem>
-        <NavItem><NavLink active={location == routes.DISCUSSION} href={routes.DISCUSSION}>
+        <NavItem><NavLink active={location === routes.DISCUSSION} href={routes.DISCUSSION}>
           Discussions
         </NavLink></NavItem>
-        <NavItem><NavLink active={location == routes.DONATION} href={routes.DONATION}>
+        <NavItem><NavLink active={location === routes.DONATION} href={routes.DONATION}>
           Donate
         </NavLink></NavItem>
-        <NavItem><NavLink active={location == routes.TIPS} href={routes.TIPS}>
+        <NavItem><NavLink active={location === routes.TIPS} href={routes.TIPS}>
           COVID Tips
         </NavLink></NavItem>
       </Nav>
@@ -49,7 +49,7 @@ const Navigation = () => {
         <NavItem><NavLink href={routes.CHAT}>
           DMs
         </NavLink></NavItem>
-        <NavItem>
+        <NavItem className="nav-dropdown">
           <Dropdown
             open={navDropdown}
             toggle={() => setNavDropdown(!navDropdown)}
