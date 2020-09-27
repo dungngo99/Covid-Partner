@@ -1,0 +1,48 @@
+.btn-outline-primary {
+  border-color: #303c6c;
+  color: #303c6c;
+}
+
+.btn-outline-primary:hover {
+  background-color: #303c6c;
+}
+
+.btn-primary {
+  background-color: #303c6c;
+  border-color: #303c6c;
+}
+
+.btn-primary:hover {
+  background-color: #405090;
+  border-color: #405090;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  background-color: #405090;
+}
+
+nav.navbar {
+  background: #B4DFE5;
+}
+
+.navbar .navbar-nav .nav-item .nav-link {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.navbar .navbar-nav .nav-item .nav-link.active {
+  background-color: #303c6c;
+  color: white;
+}
+
+.navbar .navbar-nav .nav-item > .nav-link {
+  border-radius: 25px;
+  border: 2px solid transparent;
+  margin: 0 0.5rem;
+}
+
+.navbar .navbar-nav .nav-item > .nav-link:not(.dropdown-toggle):hover {
+  border: 2px solid #303c6c;
+}

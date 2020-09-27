@@ -7,6 +7,7 @@ import './App.css';
 import Routes from './containers/routes'
 import Navigation from './containers/Navigation/index'
 import AlertMsg from './containers/Alert/index'
+import './bootstrap-override.css';
 
 const theme = {
   peach: '#fbe8a6',

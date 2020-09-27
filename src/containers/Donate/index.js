@@ -1,106 +1,114 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {ThemeConsumer} from 'styled-components';
 import {
   Container,
   Nav,
   NavItem,
-  FormCheckbox,
   Row,
   Col,
   Card,
   CardTitle,
   CardBody,
   CardImg,
-  CardFooter,
   Button
 } from 'shards-react';
+import firebase from 'firebase/app';
 
 const _chunk = require('lodash.chunk');
 
+const ItemRequest = ({item}) => {
+  return (
+    <Card>
+      <CardBody>
+        <CardTitle style={{'display': 'flex', 'justifyContent': 'space-between'}}>
+          <span>
+            {item.user.firstName} {item.user.lastName[0]}.
+          </span>
+          <Button outline>
+            Contact
+          </Button>
+        </CardTitle>
+        {item.title}
+      </CardBody>
+      {item.image && <CardImg bottom src={item.image} style={{'maxHeight': '20vh', 'objectFit': 'cover'}} />}
+    </Card>
+  );
+};
+
 const Donate = () => {
 
-  const filterNames = {
+  const [loading, setLoading] = useState(true);
+  const [requests, setRequests] = useState([]);
+  const [active, setActive] = useState(true);
 
-  };
+  useEffect(() => {
+    const unsubscribe  = firebase.firestore().collection('Donate_post_id').onSnapshot((snapshot) => {
+      const req = [];
+      snapshot.forEach((doc) => {
+        let _doc = {...doc.data()}
+        doc.data().userRef.get().then((res) => {
+          _doc.user = res.data()
+          req.push(_doc);
+        })
+        console.log(_doc);
+      });
+      setLoading(false);
+      setRequests(req);
+    });
 
-  const ItemRequest = ({item}) => {
-    return (
-      <Card>
-        <CardBody>
-          <CardTitle>
-            {item.user.firstName} {item.user.lastName[0]}.
-            <Button outline>
-              Contact
-            </Button>
-          </CardTitle>
-          {item.title}
-        </CardBody>
-        {item.image && <CardImg bottom src={item.image} style={{'maxHeight': '20vh', 'objectFit': 'cover'}} />}
-        <CardFooter>
-          
-        </CardFooter>
-      </Card>
-    );
-  };
-
-  const requests = [
-    {
-      user: {
-        firstName: "Bob",
-        lastName: "Ross"
-      },
-      title: "Paint",
-      image: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Multicolored_tempera_paints.jpg"
-    }, {
-      user: {
-        firstName: "Gordon",
-        lastName: "Ramsay"
-      },
-      title: "Lamb Sauce",
-      image: "https://assets.marthastewart.com/styles/wmax-300/d21/a99872_0303_lambgravy/a99872_0303_lambgravy_vert.jpg"
-    }, {
-      user: {
-        firstName: "Sam",
-        lastName: "Smith"
-      },
-      title: "Masks x25",
-
+    return () => {
+      unsubscribe();
     }
-  ];
+  }, []);
 
   return (
     <Container fluid>
-      <Nav fill>
-        <NavItem>
-          Inactive
-        </NavItem>
-        <NavItem>
-          Active
-        </NavItem>
-      </Nav>
-      <Nav fill>
-        <NavItem>
-          <FormCheckbox inline></FormCheckbox>
-        </NavItem>
-        <NavItem>
-          <FormCheckbox inline></FormCheckbox>
-        </NavItem>
-        <NavItem>
-          <FormCheckbox inline></FormCheckbox>
-        </NavItem>
-      </Nav>
+      <ThemeConsumer>
+        {
+          theme => (
+            <Nav fill>
+              <NavItem
+                onClick={() => setActive(false)}
+                style={{
+                  'fontSize': '30px',
+                  'fontWeight': !active ? 'bold' : '',
+                  'color': !active ? theme.darkblue : ''
+                }}
+              >
+                Inactive
+              </NavItem>
+              <NavItem
+                onClick={() => setActive(true)}
+                style={{
+                  'fontSize': '30px',
+                  'fontWeight': active ? 'bold' : '',
+                  'color': active ? theme.darkblue : ''
+                }}
+              >
+                Active
+              </NavItem>
+            </Nav>
+          )
+        }
+      </ThemeConsumer>
       <Container>
         {
-          _chunk(requests, 5).map((row) => {
+          !loading &&
+          _chunk(requests.filter((val) => val.active === active), 3).map((row, i) => {
             return (
-              <Row>
+              <Row key={i} style={{'margin': '20px 0'}}>
                 {
-                  row.map((col) => (
-                    <Col><ItemRequest item={col} /></Col>
+                  row.map((col, j) => (
+                    <Col md={4} key={j}><ItemRequest item={col} /></Col>
                   ))
                 }
               </Row>
             )
           })
+        }
+        {
+          loading &&
+          <div>Loading...</div>
         }
       </Container>
     </Container>

@@ -22,7 +22,7 @@ const Routes = (props) => {
       <Route component={Discussion} path={`${route.DISCUSSION}`}/>
       <Route component={Donation} path={route.DONATION}/>
       <Route component={Tips} path={route.TIPS}/>
-      <Route component={AccountPage} path={`${route.ACCOUNT}`}/>
+      <protectedRoute component={AccountPage} path={`${route.ACCOUNT}`}/>
       <Route component={PageNotFound} path={`${route.PAGE_NOT_FOUND}`} />
     </Switch>
   )

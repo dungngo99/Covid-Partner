@@ -11,10 +11,6 @@ const Navigation = () => {
   let isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const loading = useSelector(state => state.auth.loading)
 
-  const location = useLocation().pathname;
-
-  const [navDropdown, setNavDropdown] = useState(false);
-
   const handleLogout = (event) => {
     dispatch(authActions.logout())
   }

@@ -73,7 +73,7 @@ const DiscussionUpdates = () => {
       },
       discussionTitle: "Who here has Germix?"
     }
-  ]
+  ];
 
   return (
     <DashSection>
@@ -81,8 +81,8 @@ const DiscussionUpdates = () => {
       <div className='dash-body'>
       <ListGroup>
         {
-          updates.map((update) => (
-            <Update update={update} />
+          updates.map((update, index) => (
+            <Update update={update} key={index} />
           ))
         }
       </ListGroup>
@@ -107,8 +107,8 @@ const CovidTips = () => {
       <h2>Some things to keep in mind!</h2>
       <div className='dash-body'>
         {
-          tips.map((tip) => (
-            <FormCheckbox checked={true}>
+          tips.map((tip, index) => (
+            <FormCheckbox checked={true} key={index}>
               {tip}
             </FormCheckbox>
           ))
@@ -152,29 +152,37 @@ const DonationRequests = () => {
       <h2>Help a neighbor out!</h2>
       <Container style={{'overflowX': 'auto'}}>
         <Row>
-          {requests.map((request) => (
-            <Col style={{'width': '40vh'}}>
-              <Card small style={{'height': '40vh'}}>
-                <CardBody>
-                  <CardTitle>
-                    {request.user.firstName} {request.user.lastName[0]}.
-                    <Button outline>
-                      Contact
-                    </Button>
-                  </CardTitle>
-                  {request.title}
-                </CardBody>
-                {request.image && <CardImg bottom src={request.image} style={{'maxHeight': '25vh', 'objectFit': 'cover'}} />}
-              </Card>
-            </Col>
-          ))}
-          <Card small>
-            <CardBody>
-              <CardTitle>
-                View All
-              </CardTitle>
-            </CardBody>
-          </Card>
+          {
+            requests.map((request, index) => (
+              <Col style={{'width': '40vh'}} key={index}>
+                <Card small style={{'height': '40vh'}}>
+                  <CardBody>
+                    <CardTitle style={{'display': 'flex', 'justifyContent': 'space-between'}}>
+                      <span>
+                        {request.user.firstName} {request.user.lastName[0]}.
+                      </span>
+                      <Button outline>
+                        Contact
+                      </Button>
+                    </CardTitle>
+                    {request.title}
+                  </CardBody>
+                  {request.image && <CardImg bottom src={request.image} style={{'maxHeight': '25vh', 'objectFit': 'cover'}} />}
+                </Card>
+              </Col>
+            ))
+          }
+          <Col style={{'width': '40vh'}}>
+            <Card small style={{'width': '100%', 'height': '100%'}}>
+              <CardBody>
+                <CardTitle>
+                  <a href={routes.DONATION}>
+                    View All
+                  </a>
+                </CardTitle>
+              </CardBody>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </DashSection>
