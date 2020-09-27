@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import * as routes from '../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { authActions } from '../../redux/actions/auth.action'
-// import { Navbar, Nav, NavItem, NavLink } from 'shards-react';
 
 const Navigation = () => {
   const dispatch = useDispatch()
@@ -12,12 +11,14 @@ const Navigation = () => {
   let isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const loading = useSelector(state => state.auth.loading)
 
+  const location = useLocation().pathname;
+
+  const [navDropdown, setNavDropdown] = useState(false);
+
   const handleLogout = (event) => {
     dispatch(authActions.logout())
   }
-
-  isAuthenticated = true
-
+  
   const authLinks = (
     <Nav>
       <Nav.Link as={Link} to={`${routes.DASHBOARD}`}>

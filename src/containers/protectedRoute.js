@@ -5,8 +5,7 @@ import {useSelector} from 'react-redux'
 import * as routes from './constants'
 
 const ProtectedRoute = ({path, component}) => {
-  // const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-  const isAuthenticated = true
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   
   if (isAuthenticated) return <Route path={path} component={component}></Route>
 
