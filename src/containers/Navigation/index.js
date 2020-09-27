@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import * as routes from '../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { authActions } from '../../redux/actions/auth.action'
@@ -8,7 +8,11 @@ import {
   Navbar,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle
 } from 'shards-react';
 
 const Navigation = () => {
@@ -17,38 +21,53 @@ const Navigation = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const loading = useSelector(state => state.auth.loading)
 
+  const location = useLocation().pathname;
+
+  const [navDropdown, setNavDropdown] = useState(false);
+
   const handleLogout = (event) => {
     dispatch(authActions.logout())
   }
 
   const authLinks = (
-    <Navbar sticky type="light">
+    <Navbar sticky expand={true} type="light">
       <Nav navbar pills>
-        <NavItem><NavLink href={routes.DASHBOARD}>
-            Home
+        <NavItem><NavLink active={location == routes.DASHBOARD} href={routes.DASHBOARD}>
+          Home
         </NavLink></NavItem>
-        <NavItem><NavLink href={routes.DISCUSSION}>
+        <NavItem><NavLink active={location == routes.DISCUSSION} href={routes.DISCUSSION}>
           Discussions
         </NavLink></NavItem>
-        <NavItem><NavLink href={routes.DONATION}>
+        <NavItem><NavLink active={location == routes.DONATION} href={routes.DONATION}>
           Donate
         </NavLink></NavItem>
-        <NavItem><NavLink href={routes.TIPS}>
+        <NavItem><NavLink active={location == routes.TIPS} href={routes.TIPS}>
           COVID Tips
         </NavLink></NavItem>
       </Nav>
-      <Nav navbar>
-        Sign out
+      <Nav navbar className="ml-auto">
+        <NavItem><NavLink href={routes.CHAT}>
+          DMs
+        </NavLink></NavItem>
+        <NavItem>
+          <Dropdown
+            open={navDropdown}
+            toggle={() => setNavDropdown(!navDropdown)}
+          >
+            <DropdownToggle nav caret>
+              FirstName
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem><NavLink href={routes.ACCOUNT}>
+                My Profile
+              </NavLink></DropdownItem>
+              <DropdownItem><NavLink href={"/"} onClick={(event) => handleLogout(event)}>
+                Sign out
+              </NavLink></DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavItem>
       </Nav>
-          {/* <Nav.Link as={Link} to={`${routes.HOME}`}>
-            <i className='fas fa-chart-line'></i> Homepage
-          </Nav.Link>
-          <Nav.Link as={Link} to={`${routes.ACCOUNT}`}>
-            <i className="fas fa-sign-out-alt" /> Account
-          </Nav.Link>
-          <Nav.Link as={Link} to='/' onClick={(event) => handleLogout(event)}>
-            <i className="fas fa-sign-out-alt" /> Logout
-          </Nav.Link> */}
     </Navbar>
   );
 

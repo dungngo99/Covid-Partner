@@ -5,5 +5,6 @@ export const ACCOUNT = '/account';
 export const DASHBOARD = '/dashboard';
 export const DISCUSSION = '/discussion';
 export const DONATION = '/donation';
-export const TIPS = '/advice'
+export const TIPS = '/advice';
+export const CHAT = '/chat';
 export const PAGE_NOT_FOUND = '*';
