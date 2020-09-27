@@ -6,7 +6,7 @@ import SignIn from './SignIn/index'
 import SignUp from './SignUp/index'
 import AccountPage from './Account/index'
 import PageNotFound from './PageNotFound/index'
-import Discussion from './Discussion/index'
+import Discussion from './Discussion'
 import Dashboard from './Dashboard'
 import Donate from './Donate'
 
