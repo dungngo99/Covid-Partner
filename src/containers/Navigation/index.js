@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as routes from '../constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { authActions } from '../../redux/actions/auth.action'

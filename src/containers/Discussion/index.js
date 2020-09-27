@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled, { ThemeConsumer } from 'styled-components';
-import * as routes from '../constants';
 import {
   Container,
   FormInput,
@@ -25,7 +24,7 @@ const DiscussionPost = styled.div`
 
 const MyPost = () => {
 
-  const [tags, setTags] = useState(['tag', 'tag']);
+  const [tags] = useState(['tag', 'tag']);
 
   return (
     <DiscussionPost style={{'margin': '40px 0'}}>
@@ -241,7 +240,7 @@ const Discussion = () => {
   ];
 
   const [expanded, setExpanded] = useState(false);
-  const [filters, setFilters] = useState([]);
+  const [filters] = useState([]);
 
   return (
     <Container>
