@@ -18,7 +18,7 @@ const Navigation = () => {
   const handleLogout = (event) => {
     dispatch(authActions.logout())
   }
-  
+
   const authLinks = (
     <Nav>
       <Nav.Link as={Link} to={`${routes.DASHBOARD}`}>
