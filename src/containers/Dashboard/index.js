@@ -157,8 +157,10 @@ const DonationRequests = () => {
               <Col style={{'width': '40vh'}} key={index}>
                 <Card small style={{'height': '40vh'}}>
                   <CardBody>
-                    <CardTitle>
-                      {request.user.firstName} {request.user.lastName[0]}.
+                    <CardTitle style={{'display': 'flex', 'justifyContent': 'space-between'}}>
+                      <span>
+                        {request.user.firstName} {request.user.lastName[0]}.
+                      </span>
                       <Button outline>
                         Contact
                       </Button>
@@ -170,13 +172,17 @@ const DonationRequests = () => {
               </Col>
             ))
           }
-          <Card small>
-            <CardBody>
-              <CardTitle>
-                View All
-              </CardTitle>
-            </CardBody>
-          </Card>
+          <Col style={{'width': '40vh'}}>
+            <Card small style={{'width': '100%', 'height': '100%'}}>
+              <CardBody>
+                <CardTitle>
+                  <a href={routes.DONATION}>
+                    View All
+                  </a>
+                </CardTitle>
+              </CardBody>
+            </Card>
+          </Col>
         </Row>
       </Container>
     </DashSection>

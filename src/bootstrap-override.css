@@ -17,6 +17,10 @@
   border-color: #405090;
 }
 
+.custom-control-input:checked~.custom-control-label::before {
+  background-color: #405090;
+}
+
 nav.navbar {
   background: #B4DFE5;
 }

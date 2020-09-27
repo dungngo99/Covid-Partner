@@ -138,7 +138,7 @@ const Post = ({post}) => {
                 'width': '100px',
                 'backgroundImage': 'url("https://profplumbinc.com/wp-content/uploads/2018/06/default-profile.png")',
                 'backgroundSize': 'cover',
-                'marginRight': '10px'
+                'marginRight': '30px'
               }}>
               </div>
             )
@@ -188,7 +188,6 @@ const Discussion = () => {
     {
       title: 'Title',
       content: 'Content',
-      userID: 394204930,
       author: {
         firstName: 'Jill',
         lastName: 'Richardson'
@@ -218,7 +217,6 @@ const Discussion = () => {
     {
       title: 'Title',
       content: 'Content',
-      userId: 394204930,
       author: {
         firstName: 'Katy',
         lastName: 'Bowen'
@@ -249,16 +247,23 @@ const Discussion = () => {
     <Container>
       <Row>
         <Col md={expanded ? 4 : 3}>
-          <div style={{'fontSize': '40px'}}>Filters</div>
-          <Button onClick={() => setExpanded(!expanded)}>{expanded ? 'Collapse' : 'Expand'}</Button>
-          {
-            expanded
-            ? 
-              <>
-                <FormInput></FormInput>
-              </>
-            : <div>{filters.length} filters</div>
-          }
+          <div style={{'display': 'flex', 'justifyContent': 'space-between', 'flexDirection': 'row', 'marginTop': '30px'}}>
+            <span style={{'flex': '0 0', 'fontSize': '40px'}}>Filters</span>
+            <Button style={{'flex': '0 0'}} onClick={() => setExpanded(!expanded)}>{expanded ? 'Collapse' : 'Expand'}</Button>
+          </div>
+          <div style={{'margin': '20px 0'}}>
+            {
+              expanded
+              ? 
+                <>
+                  <FormInput placeholder="Search..."/>
+                </>
+              : 
+                <>
+                  {filters.length} filters
+                </>
+            }
+          </div>
         </Col>
         <Col md={expanded ? 8 : 9}>
           <MyPost></MyPost>
@@ -274,57 +279,4 @@ const Discussion = () => {
   )
 }
 
-
-
-
-  // TEMPORARY COMMENT so i can compile
-
-  // var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
-  // starCountRef.on('value', function(snapshot) {
-  //   updateStarCount(postElement, snapshot.val());
-  // });
-
-  // var userId = firebase.auth().currentUser.uid;
-  // return firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
-  //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-  // });
-
-  // function writeNewPost(uid, username, picture, title, body)
-  // {
-  //   var postData = {
-  //     author: username,
-  //     uid: uid,
-  //     body: body,
-  //     title: title,
-  //     starCount: 0,
-  //     authorPic: picture
-  //   };
-
-  //   var newPostKey = firebase.database().ref.child('posts').push().key;
-
-  //   var updates = {};
-  //   updates['/posts/' + newPostKey] = postData;
-
-  //   updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
-  //   return firebase.database().ref().update(updates);
-  // }
-
-
-  // //completion callback
-  // firebase.database().ref('users/' + userId).set({
-  //   username: name,
-  //   email: email,
-  //   profile_picture : imageUrl
-  // }, function (error)
-  //   {
-  //     if (error)
-  //     {
-  //       // Something to write if it failed
-  //     }
-  //     else
-  //     {
-  //       // Saved successfully!
-  //     }
-  //   });
 export default Discussion;

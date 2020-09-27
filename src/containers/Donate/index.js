@@ -20,8 +20,10 @@ const ItemRequest = ({item}) => {
   return (
     <Card>
       <CardBody>
-        <CardTitle>
-          {item.user.firstName} {item.user.lastName}
+        <CardTitle style={{'display': 'flex', 'justifyContent': 'space-between'}}>
+          <span>
+            {item.user.firstName} {item.user.lastName[0]}.
+          </span>
           <Button outline>
             Contact
           </Button>
@@ -94,10 +96,10 @@ const Donate = () => {
           !loading &&
           _chunk(requests.filter((val) => val.active === active), 3).map((row, i) => {
             return (
-              <Row key={i}>
+              <Row key={i} style={{'margin': '20px 0'}}>
                 {
                   row.map((col, j) => (
-                    <Col key={j}><ItemRequest item={col} /></Col>
+                    <Col md={4} key={j}><ItemRequest item={col} /></Col>
                   ))
                 }
               </Row>
